@@ -1,5 +1,7 @@
 # Business Questions & Insights
 
+> All monetary values are in US dollars. Results are based on the complete Sample Superstore dataset (9,994 records).
+
 ## Business Question 1 — Overall Business Performance
 
 ### Business Question
@@ -22,17 +24,17 @@ We used aggregate functions to calculate the overall business KPIs:
 
 | KPI | Result |
 |---|---:|
-| Total Records | 9,694 |
-| Total Orders | 4,931 |
+| Total Records | 9,994 |
+| Total Orders | 5,009 |
 | Total Customers | 793 |
-| Total Sales | 2,272,449.86 |
-| Total Profit | 282,857.75 |
-| Total Units Sold | 36,749 |
-| Overall Profit Margin | 12.45% |
+| Total Sales | 2,297,200.86 |
+| Total Profit | 286,397.02 |
+| Total Units Sold | 37,873 |
+| Overall Profit Margin | 12.47% |
 
 ### Business Insight
 
-The dataset contains 4,931 orders from 793 customers, generating approximately 2.27 million in sales and 282.86K in profit. The overall profit margin is 12.45%, providing a baseline for evaluating performance across categories, regions, customers, products, discounts, and time periods.
+The dataset contains 5,009 orders from 793 customers, generating approximately 2.30 million in sales and 286.40K in profit. The overall profit margin is 12.47%, providing a baseline for evaluating performance across categories, regions, customers, products, discounts, and time periods.
 
 ---
 
@@ -57,17 +59,17 @@ The results were then ordered by total profit in descending order.
 
 | Category | Total Sales | Total Profit | Total Units | Profit Margin |
 |---|---:|---:|---:|---:|
-| Technology | 835,900.07 | 145,387.10 | 6,904 | 17.39% |
-| Office Supplies | 703,502.93 | 120,489.89 | 21,990 | 17.13% |
-| Furniture | 733,046.86 | 16,980.77 | 7,855 | 2.32% |
+| Technology | 836,154.03 | 145,454.95 | 6,939 | 17.40% |
+| Office Supplies | 719,047.03 | 122,490.80 | 22,906 | 17.04% |
+| Furniture | 741,999.80 | 18,451.27 | 8,028 | 2.49% |
 
 ### Business Insight
 
-Technology generates the highest total profit at 145,387.10 and also has the highest profit margin at 17.39%.
+Technology generates the highest total profit at 145,454.95 and also has the highest profit margin at 17.40%, narrowly ahead of Office Supplies.
 
-Office Supplies has a similar margin of 17.13% and generates 120,489.89 in profit while selling substantially more units than Technology.
+Office Supplies has a similar margin of 17.04% and generates 122,490.80 in profit while selling substantially more units than Technology.
 
-Furniture generates 733,046.86 in sales, which is comparable to the other categories, but its profit is only 16,980.77, resulting in a much lower 2.32% profit margin.
+Furniture generates 741,999.80 in sales, which is comparable to the other categories, but its profit is only 18,451.27, resulting in a much lower 2.49% profit margin.
 
 This indicates that high sales volume does not necessarily translate into high profitability, making Furniture a category that warrants further investigation.
 
@@ -86,23 +88,24 @@ We grouped the data by `Region` and calculated:
 - `SUM(Sales)` → total sales
 - `SUM(Profit)` → total profit
 - `SUM(Profit) / SUM(Sales)` → profit margin
+- `AVG(Discount)` → average discount level
 
 The results were ordered by total profit in descending order.
 
 ### Result
 
-| Region | Total Sales | Total Profit | Profit Margin |
-|---|---:|---:|---:|
-| West | 713,471.34 | 106,021.15 | 14.86% |
-| East | 672,194.05 | 90,672.01 | 13.49% |
-| South | 388,983.59 | 46,035.69 | 11.83% |
-| Central | 497,800.87 | 40,128.90 | 8.06% |
+| Region | Total Sales | Total Profit | Profit Margin | Avg. Discount |
+|---|---:|---:|---:|---:|
+| West | 725,457.82 | 108,418.45 | 14.94% | 10.93% |
+| East | 678,781.24 | 91,522.78 | 13.48% | 14.54% |
+| South | 391,721.91 | 46,749.43 | 11.93% | 14.73% |
+| Central | 501,239.89 | 39,706.36 | 7.92% | 24.04% |
 
 ### Business Insight
 
-Regional performance varies across both sales and profitability. West generates the highest total profit at 106,021.15 and has a 14.86% profit margin.
+Regional performance varies across both sales and profitability. West generates the highest total profit at 108,418.45 and has a 14.94% profit margin.
 
-The Central region generates 497,800.87 in sales, but its profit margin is only 8.06%, the lowest among the four regions.
+The Central region generates 501,239.89 in sales, but its profit margin is only 7.92%, the lowest among the four regions. Central also has the highest average discount (24.04%), compared with 10.93% in West. This is an association and does not by itself show that discounting caused the lower margin.
 
 This shows that sales volume alone does not determine regional profitability.
 
@@ -129,7 +132,7 @@ We grouped the data by `Sub-Category` and calculated:
 |---|---:|---:|---:|
 | Tables | 206,965.53 | -17,725.48 | -8.56% |
 | Bookcases | 114,880.00 | -3,472.56 | -3.02% |
-| Supplies | 45,952.47 | -1,348.57 | -2.93% |
+| Supplies | 46,673.54 | -1,189.10 | -2.55% |
 
 ### Business Insight
 
@@ -162,14 +165,14 @@ We calculated:
 
 | Region | Total Sales | Total Profit | Profit Margin | Avg. Discount |
 |---|---:|---:|---:|---:|
-| East | 39,139.81 | -11,025.38 | -28.17% | 37.37% |
+| East | 39,139.81 | -11,025.38 | -28.17% | 37.38% |
 | South | 43,916.19 | -4,623.06 | -10.53% | 22.25% |
 | Central | 39,154.97 | -3,559.65 | -9.09% | 26.25% |
 | West | 84,754.56 | 1,482.61 | 1.75% | 20.00% |
 
 ### Business Insight
 
-Tables shows substantial regional variation. The East region has the largest loss at -11,025.38 and the lowest profit margin at -28.17%. It also has the highest average discount at 37.37%.
+Tables shows substantial regional variation. The East region has the largest loss at -11,025.38 and the lowest profit margin at -28.17%. It also has the highest average discount at 37.38%.
 
 In contrast, the West region generates 1,482.61 in profit with the lowest average discount among the four regions at 20.00%.
 
@@ -192,20 +195,22 @@ We created discount bands using a `CASE` expression:
 - Medium Discount → >20% to 40%
 - High Discount → >40%
 
-We then calculated total sales, total profit, and profit margin for each band.
+We then calculated total sales, total profit, and profit margin for each band. Profit margin was calculated as `SUM(Profit) / SUM(Sales)` for each band.
 
 ### Result
 
 | Discount Band | Records | Sales | Profit | Profit Margin |
 |---|---:|---:|---:|---:|
-| No Discount | 4,657 | 1,072,777.32 | 317,184.04 | 29.57% |
-| Low Discount | 3,693 | 838,235.31 | 99,827.47 | 11.91% |
-| Medium Discount | 459 | 234,065.97 | -35,825.86 | -15.31% |
-| High Discount | 885 | 127,371.25 | -98,327.91 | -77.20% |
+| No Discount | 4,798 | 1,087,908.47 | 320,987.60 | 29.51% |
+| Low Discount | 3,803 | 846,522.24 | 100,785.47 | 11.91% |
+| Medium Discount | 460 | 234,137.90 | -35,817.47 | -15.30% |
+| High Discount | 933 | 128,632.25 | -99,558.59 | -77.40% |
 
 ### Business Insight
 
-Profitability declines substantially across the discount bands. Transactions with no discount have a 29.57% profit margin, while the high-discount band has a -77.20% margin.
+Profitability declines substantially across the discount bands. Transactions with no discount have a 29.51% profit margin, while the high-discount band has a -77.40% margin.
+
+The 1,393 records discounted above 20% produced a combined loss of about 135.4K.
 
 This demonstrates a strong association between higher discount levels and lower profitability in this dataset. However, the analysis does not establish causation.
 
@@ -225,13 +230,13 @@ We calculated Average Order Value (AOV) by dividing total sales by the number of
 
 | Metric | Result |
 |---|---:|
-| Total Orders | 4,931 |
-| Total Sales | 2,272,449.86 |
-| Average Order Value | 460.85 |
+| Total Orders | 5,009 |
+| Total Sales | 2,297,200.86 |
+| Average Order Value | 458.61 |
 
 ### Business Insight
 
-The average order generates approximately 460.85 in sales. This provides a baseline for comparing order values across customers, regions, categories, or other segments.
+The average order generates approximately 458.61 in sales. This provides a baseline for comparing order values across customers, regions, categories, or other segments.
 
 ---
 
@@ -262,7 +267,7 @@ Two rankings were performed:
 
 | Customer | Sales | Profit | Profit Margin |
 |---|---:|---:|---:|
-| Tamara Chand | 19,017.85 | 8,964.48 | 47.14% |
+| Tamara Chand | 19,052.22 | 8,981.32 | 47.14% |
 
 ### Business Insight
 
@@ -331,13 +336,13 @@ We used multiple CTEs and window functions to:
 |---|---:|
 | Total Customers | 793 |
 | Top 20% Customers | 159 |
-| Sales from Top 20% | 1,096,133.32 |
-| Total Sales | 2,272,449.86 |
-| Sales Contribution | 48.24% |
+| Sales from Top 20% | 1,106,064.33 |
+| Total Sales | 2,297,200.86 |
+| Sales Contribution | 48.15% |
 
 ### Business Insight
 
-The top approximately 20% of customers account for 48.24% of total sales. This indicates that a relatively small portion of the customer base contributes a substantial share of overall revenue.
+The top approximately 20% of customers (159) account for 48.15% of total sales, about 2.4 times their share of the customer base. This is moderate concentration, weaker than a classic 80/20 pattern.
 
 ---
 
@@ -349,7 +354,7 @@ Which products generate the highest sales and profit, and which high-sales produ
 
 ### SQL Approach
 
-We grouped the data by `Product Name` and calculated total sales, total profit, and profit margin.
+We grouped the data by `Product ID` and `Product Name` (some product IDs are shared by different products) and calculated total sales, total profit, and profit margin.
 
 Separate analyses were performed to:
 
@@ -383,6 +388,8 @@ Example:
 
 Product-level performance varies significantly. Some products generate substantial sales and strong profits, while others generate meaningful sales but produce losses.
 
+Some high-sales products, such as the HON 5400 Series Task Chairs (21,870.58 in sales), break even with zero profit and would not appear in a loss-only filter.
+
 This demonstrates why sales volume alone is insufficient for evaluating product performance.
 
 ---
@@ -407,9 +414,9 @@ Additional queries were used to identify the months with the highest sales, high
 
 | Metric | Month | Result |
 |---|---|---:|
-| Highest Sales | November 2017 | 117,383.38 |
-| Highest Profit | December 2016 | 17,547.22 |
-| Lowest Profit | January 2015 | -3,291.02 |
+| Highest Sales | November 2017 | 118,447.83 |
+| Highest Profit | December 2016 | 17,885.31 |
+| Lowest Profit | January 2015 | -3,281.01 |
 
 ### Business Insight
 
