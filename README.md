@@ -1,10 +1,10 @@
-# Retail Sales & Profitability Analysis Using MySQL
+# Retail Sales & Profitability Analysis Using MySQL & Power BI
 
 ## Project Overview
 
-This project analyzes retail sales and profitability data using MySQL to answer practical business questions related to revenue, profit margins, customers, products, discounts, regions, and time-based performance.
+This project analyzes retail sales and profitability data using MySQL and Power BI to answer practical business questions related to revenue, profit margins, customers, products, discounts, regions, and time-based performance.
 
-The analysis was performed on the Sample Superstore dataset and focuses on using SQL to load, validate, and clean raw transactional data and transform it into business-relevant insights.
+The analysis was performed on the Sample Superstore dataset and focuses on using SQL to load, validate, and clean raw transactional data and transform it into business-relevant insights, with an interactive Power BI dashboard built on top of the cleaned data.
 
 ## Business Objective
 
@@ -73,6 +73,8 @@ See [`data/README.md`](data/README.md) for full details.
 - **MySQL 8.0**
 - **MySQL Workbench**
 - **SQL**
+- **Power BI Desktop**
+- **DAX**
 - Sample Superstore Dataset
 
 ### SQL Concepts Used
@@ -87,6 +89,15 @@ See [`data/README.md`](data/README.md) for full details.
 - Data validation queries
 
 The full script is in [`sql/Retail_Sales_Profitability_Analysis.sql`](sql/Retail_Sales_Profitability_Analysis.sql), organized into setup, data validation, KPIs, category, regional, sub-category, discount, customer, product, and time-series sections.
+
+### DAX Concepts Used
+
+- A dedicated Date table (`CALENDAR()`), marked as the model's date table, related to the fact table
+- `DIVIDE()` for safe ratio calculations (profit margin, average order value, sales concentration)
+- Calculated columns (`SWITCH()` for discount bands)
+- `RANKX()` for customer ranking, used to identify the top 20% of customers by sales
+- Time-intelligence measures (`SAMEPERIODLASTYEAR()`) for year-over-year sales and profit growth
+- `CALCULATE()` and `FILTER()` for the top-20%-of-customers sales contribution measure
 
 ---
 
@@ -228,6 +239,32 @@ The highest-sales month and highest-profit month were different, demonstrating t
 
 ---
 
+## Power BI Dashboard
+
+An interactive 3-page Power BI dashboard was built on top of the cleaned `superstore` MySQL table, using DAX measures (`DIVIDE()`, `RANKX()`, calculated columns, time-intelligence functions) and slicers for Region, Year, and Category. The dashboard mirrors and visualizes the findings from the SQL analysis above.
+
+### Page 1: Executive Summary
+
+KPI cards (total sales, profit, margin, orders, customers, average order value), profit by category, sales by region, and a monthly sales & profit trend, with slicers for segment, category, region, and year.
+
+![Executive Summary](powerbi/page1_executive_summary.png)
+
+### Page 2: Profitability & Discount Analysis
+
+Profit margin by discount band, profit by sub-category (all sub-categories, not just the loss-making ones), a table of loss-making sub-categories, and a combo chart comparing regional profit against average discount, which visualizes the Central-region finding directly.
+
+![Profitability & Discount Analysis](powerbi/page2_discounts.png)
+
+### Page 3: Customer & Product Analysis
+
+Top customers and top products shown as sales and profit side by side, so a loss-making top performer (such as the highest-sales customer) is visible at a glance rather than requiring a separate table. Also includes the high-sales, loss-making products table and a card showing the top-20%-of-customers sales concentration.
+
+![Customer & Product Analysis](powerbi/page3_customer_product.png)
+
+The `.pbix` file is available in [`powerbi/Retail_Sales_Profitability_Dashboard.pbix`](powerbi/Retail_Sales_Profitability_Dashboard.pbix). Opening it in Power BI Desktop with a live refresh requires a connection to the `retail_analytics` MySQL database (see [`data/README.md`](data/README.md) for setup).
+
+---
+
 ## Key Findings
 
 1. **Technology** generated the highest category-level profit and margin (17.40%), narrowly ahead of Office Supplies (17.04%).
@@ -256,18 +293,27 @@ These are areas for further analysis. The data shows associations, not proven ca
 
 ## How to Run
 
+### SQL
+
 1. Install **MySQL 8.0 or later** (the script uses CTEs and window functions).
 2. Download the CSV from the [Kaggle source](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final).
 3. Copy the file into the folder returned by `SHOW VARIABLES LIKE 'secure_file_priv';`.
 4. Update the file path in section 0.3 of the SQL script and run the script top to bottom in MySQL Workbench.
 5. Confirm the load worked: query 1.1 should show 9,994 rows and `missing_rows = 0`.
 
+### Power BI
+
+1. Install **Power BI Desktop** and the MySQL Connector/NET driver.
+2. Open [`powerbi/Retail_Sales_Profitability_Dashboard.pbix`](powerbi/Retail_Sales_Profitability_Dashboard.pbix).
+3. If prompted, update the data source credentials to point at your local `retail_analytics` database.
+4. Refresh the data (Home > Refresh) to pull the latest table contents.
+
 ---
 
 ## Repository Structure
 
 ```text
-retail-sales-profitability-mysql/
+retail-sales-profitability-sql-powerbi/
 │
 ├── README.md
 │
@@ -277,6 +323,12 @@ retail-sales-profitability-mysql/
 ├── data/
 │   └── README.md
 │
-└── insights/
-    └── Business_Questions.md
+├── insights/
+│   └── Business_Questions.md
+│
+└── powerbi/
+    ├── Retail_Sales_Profitability_Dashboard.pbix
+    ├── page1_executive_summary.png
+    ├── page2_discounts.png
+    └── page3_customer_product.png
 ```
